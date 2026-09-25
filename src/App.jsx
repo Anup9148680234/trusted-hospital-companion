@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import ServiceCard from "./components/ServiceCard";
 import RequestAssistance from "./pages/RequestAssistance";
+import RequestSuccess from "./pages/RequestSuccess";
 
 import { services } from "./data/services";
 
@@ -30,18 +31,15 @@ function Home() {
               </h2>
 
               <p className="mt-4 leading-7 text-slate-600">
-                From hospital registration to keeping your family updated,
-                we provide dependable non-medical assistance throughout the
+                From hospital registration to keeping your family updated, we
+                provide dependable non-medical assistance throughout the
                 hospital visit.
               </p>
             </div>
 
             <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {services.map((service) => (
-                <ServiceCard
-                  key={service.title}
-                  service={service}
-                />
+                <ServiceCard key={service.title} service={service} />
               ))}
             </div>
           </div>
@@ -56,15 +54,14 @@ function Home() {
                 </p>
 
                 <h2 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-white sm:text-4xl">
-                  Your loved one shouldn't have to navigate the hospital
-                  alone.
+                  Your loved one shouldn't have to navigate the hospital alone.
                 </h2>
 
                 <p className="mt-5 max-w-2xl text-base leading-7 text-slate-300">
-                  Work, distance, travel, or other responsibilities can make
-                  it difficult to accompany a parent or loved one to every
-                  hospital appointment. That's where a trusted patient
-                  companion can help.
+                  Work, distance, travel, or other responsibilities can make it
+                  difficult to accompany a parent or loved one to every hospital
+                  appointment. That's where a trusted patient companion can
+                  help.
                 </p>
 
                 <a
@@ -88,10 +85,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
 
-        <Route
-          path="/request-assistance"
-          element={<RequestAssistance />}
-        />
+        <Route path="/request-assistance" element={<RequestAssistance />} />
+
+        <Route path="/request-success" element={<RequestSuccess />} />
       </Routes>
     </BrowserRouter>
   );

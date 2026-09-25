@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   CalendarDays,
   CheckCircle2,
@@ -23,6 +24,8 @@ const initialForm = {
 };
 
 function InquiryForm() {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState(initialForm);
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
@@ -52,7 +55,7 @@ function InquiryForm() {
     ];
 
     const hasMissingFields = requiredFields.some(
-      (field) => !form[field].trim()
+      (field) => !form[field].trim(),
     );
 
     if (hasMissingFields) {
@@ -74,9 +77,7 @@ function InquiryForm() {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          result.message || "Unable to submit inquiry."
-        );
+        throw new Error(result.message || "Unable to submit inquiry.");
       }
 
       if (
@@ -97,59 +98,25 @@ function InquiryForm() {
             service_date: form.serviceDate,
             service_time: form.serviceTime,
             service_type: form.serviceType,
-            assistance_details:
-              form.assistanceDetails || "Not provided",
+            assistance_details: form.assistanceDetails || "Not provided",
           },
           {
             publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
-          }
+          },
         );
       }
 
-      setStatus("success");
       setForm(initialForm);
+
+      navigate("/request-success");
     } catch (err) {
       console.error(err);
 
-      setError(
-        err.message ||
-          "Something went wrong. Please try again."
-      );
+      setError(err.message || "Something went wrong. Please try again.");
 
       setStatus("error");
     }
   };
-
-  if (status === "success") {
-    return (
-      <section className="px-5 pb-20 pt-6 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl">
-          <div className="rounded-3xl border border-teal-100 bg-white p-8 text-center shadow-sm sm:p-12">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-teal-50 text-teal-600">
-              <CheckCircle2 size={32} />
-            </div>
-
-            <h2 className="mt-6 text-2xl font-extrabold text-[#123B4A] sm:text-3xl">
-              Inquiry received
-            </h2>
-
-            <p className="mx-auto mt-4 max-w-lg text-sm leading-7 text-slate-600">
-              Thank you for contacting us. We have received your request
-              and will contact you to discuss availability and the next
-              steps.
-            </p>
-
-            <Link
-              to="/"
-              className="mt-7 inline-flex rounded-xl bg-[#123B4A] px-6 py-3.5 text-sm font-bold text-white transition hover:bg-[#0d2d39]"
-            >
-              Return to Home
-            </Link>
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section className="px-5 pb-20 pt-6 sm:px-6 lg:px-8">
@@ -255,8 +222,7 @@ function InquiryForm() {
             </h2>
 
             <p className="mt-1 text-sm text-slate-500">
-              Please provide the basic information needed to arrange
-              assistance.
+              Please provide the basic information needed to arrange assistance.
             </p>
           </div>
 
@@ -378,15 +344,11 @@ function InquiryForm() {
                 <option value="Medicine / report collection">
                   Medicine / report collection
                 </option>
-                <option value="Family updates">
-                  Family updates
-                </option>
+                <option value="Family updates">Family updates</option>
                 <option value="Transportation assistance">
                   Transportation assistance
                 </option>
-                <option value="Other">
-                  Other
-                </option>
+                <option value="Other">Other</option>
               </select>
             </div>
 
@@ -411,9 +373,9 @@ function InquiryForm() {
           </div>
 
           <div className="mt-7 rounded-xl bg-amber-50 px-4 py-3 text-xs leading-5 text-amber-800">
-            Please do not submit medical records, diagnoses, prescriptions,
-            or other sensitive medical information through this form. This
-            service provides non-medical assistance only.
+            Please do not submit medical records, diagnoses, prescriptions, or
+            other sensitive medical information through this form. This service
+            provides non-medical assistance only.
           </div>
 
           {error && (
@@ -438,8 +400,8 @@ function InquiryForm() {
           </button>
 
           <p className="mt-4 text-center text-xs leading-5 text-slate-500">
-            Submitting this form does not confirm a booking. We will contact
-            you to discuss availability and service details.
+            Submitting this form does not confirm a booking. We will contact you
+            to discuss availability and service details.
           </p>
         </form>
       </div>
